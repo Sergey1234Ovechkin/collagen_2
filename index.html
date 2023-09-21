@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/collagen.css">
+<style type="text/css"> 
+</style>
+</head>
+	<body>
+		<div class="container-fluid" >
+			<div class="row main-row">
+				<div  class="col-7 col-sm-7 col-md-8 col-lg-9" id="canvas_container">
+<!--canvas-->				
+						<div  class="canvas-container" style="padding-right: 5px; padding-left: 5px;">
+						
+							<canvas data-canvas="container"  id="canvas" style=""></canvas>
+						</div>
+<!-- контрольные точки, координаты x,y -->						
+						<div data-control_points="container" class="control-points">
+						  <div  class="form-group form-row">
+							<div class="form-group col-1">
+								<span name="point_x" type="text"  style="display: inline-block; width: 40px; padding: 0px; font-size: 15px; color: red;"  placeholder="x point" title="Координаты точки X на canvas"></span>
+								<span name="point_y" type="text"  style="display: inline-block; width: 40px; padding: 0px;  font-size: 15px; color: red;" placeholder="y point" title="Координаты точки Y на canvas"></span>
+							</div>
+							<div class="form-group col-1">
+								<input name="control_point_x" type="text"  style="width: 60px; padding: 0px; font-size: 14px; margin-top: 2px;"  placeholder="x point" title="Координаты  X на canvas">
+								<input name="control_point_y" type="text"  style="width: 60px; padding: 0px;  font-size: 14px;" placeholder="y point" title="Координаты  Y на canvas">
+							</div>
+							<div class="form-group col-3">
+								<button type="button" name="move_coner_to_point" style="width: 190px; " class="btn btn-outline-info btn-sm" title="Поместить верхний угол спрайта или контура в точку на координатах">Переместить в точку угол</button>
+								<button type="button" name="move_center_to_point" style="width: 190px; " class="btn btn-outline-info btn-sm" title="Поместить центр спрайта или контура в точку на координатах">Переместить в точку центр</button>							
+							</div>
+							<div class="form-group col-4 col-md-4 col-lg-3">
+								<button type="button" name="add_area_point" style="width: 190px; margin-left: 4px;" class="btn btn-outline-info btn-sm" title="Добавить точку незаконченного контура к координатам">Добавить точку к контуру</button>
+								<input name="move_area_point" type="text"  style="margin-left: 4px; width: 90px; padding: 0px; font-size: 13px; position: relative; top: 2px;"  placeholder="index point" title="Переместить точку - index контура в указанные координаты">
+								<button type="button" name="move_area_point_click" style="width: 90px;" class="btn btn-outline-info btn-sm" title="Переместить точку - index контура в указанные координаты">move</button>
+							</div>
+							<div class="form-group col-3 col-md-3 col-lg-4">
+							   <div>текущая операция:</div>
+							   <div  name="current_operation" style="background-color: green; color: white;">common</div>
+							</div>
+						   </div>	
+						</div>
+<!-- добавить текст -->						
+						<form name="form_text" style="margin-top: 15px;" onsubmit="return false" data-form_text="container">
+							<p name="form_show" class="clicker">Добавить текст спрайту, фоновому изображению  <span>+</span></p>
+							<div class="d-none">
+								<div class="form-group form-row" style="margin-bottom: 3px;">
+									<div class="form-group col-md-9">
+										<input type="text" name="font_url"  class="form-control form-control-sm"  placeholder="font url" value="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400&family=Inconsolata&family=Josefin+Sans:wght@200&family=Srisakdi:wght@700&display=swap">	
+									</div>
+									<div class="form-group col-md-3">
+										<button type="button" name="add_font" class="btn btn-info btn-sm">Добавить шрифт</button>
+									</div>
+								</div>								
+								<div class="form-group">
+									<input style="margin-bottom: 3px;" type="text" name="font"  class="form-control form-control-sm" value="30px Balsamiq Sans"  placeholder="font param (size_px font-family from font url)">	
+								</div>
+								<div class="form-group form-row">
+									<div class="form-group col-md-3">
+											<input type="text" name="text_x"  class="form-control form-control-sm" value=""  placeholder="x coord or padding left" title="x coord or padding left for sprites">	
+									</div>
+									<div class="form-group col-md-3">
+											<input type="text" name="text_y"  class="form-control form-control-sm"  value=""  placeholder="y coord or padding top" title="y coord or padding top for sprites">	
+									</div>
+									<div class="form-group col-md-3">
+											<input type="text" name="color"  class="form-control form-control-sm"  value="green"  placeholder="color">	
+									</div>
+									<div class="form-group col-md-3">
+											<input type="text" name="max_w"  class="form-control form-control-sm"  placeholder="max-w or padding right" title="отступ справа для спрайтов, максимальная шириня текста для фонового изображения(необязательный параметр)">	
+									</div>
+								</div>									
+								<div class="form-group">
+									<textarea name="text" rows="2" cols="45" type="text"  class="form-control form-control-sm"  placeholder="text"></textarea>
+								</div>
+								<button type="button" name="add_text" style="margin-bottom: 10px; margin-top: 5px;" class="btn btn-info btn-sm">Добавить текст</button>
+								<div class="alert alert-info" role="alert">
+								   <ul>
+								    <li>Добавить, удалить текст текущему спрайту или фоновому изображению</li>
+									<li>Для фонового изображения необходимо указать координаты текста по x и y осям, также можно указать максимальную ширину текста</li>
+									<li>Для спрайта отступы от верхней, левой и правой граници спрайта, ширина текста определяется автоматически</li>
+								   </ul>
+								</div>
+							</div>
+						</form>
+
+
+				</div><!-- end col-8 -->
+				<div class="col-5 col-sm-5 col-md-4 col-lg-3 right_collagen_panel">
+						    <form data-main_form="container" name="formA" onsubmit="return false" enctype="multipart/form-data" action="__URL__" method="POST" style="margin-top: 3px;">
+<!-- загрузка картинки, шаги назад для преобразований -->							
+								<div class="form-row panel_phone_img_1">
+									<div class="form-group col-2">
+											
+											<input name="load_url_img" type="text" class="form-control form-control-sm"  placeholder="img url" title="Url картинки сервера разрешающего crossorigin запросы">
+									</div>
+								    <div class="form-group col-2">
+										 <div class="form-group">
+											<label style="padding-left: 4px; padding-right: 4px;" name="load_img_click" class="inp-file" for="exampleFormControlFile1" title="Загрузить картинку с компьютера"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg></label>
+											<input name="load_img" type="file" class="form-control-file form-control-sm"  id="exampleFormControlFile1">
+										</div>
+									</div>
+									<div class="form-group col-8">
+										<button type="button"  name="step_back" class="btn btn-success btn-sm" title="Шаг назад для преобразований фоновой картинки"><</button>
+										<button type="button"  name="save_img" class="btn btn-success btn-sm" title="Сделать снимок фонового изображения"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.5 8h-7a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1zm-7-1a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-7zm0-3a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/></svg></button>
+										<button type="button"  name="restore_img" class="btn btn-warning btn-sm" title="Отобразить предыдущий снимок фонового изображения">↓</button>
+										<button type="button"  name="restart_img" class="btn btn-danger btn-sm" title="Восстановить начальное изображение"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-clockwise" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"/><path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"/></svg></button>
+										<button   type="button" name="start_video" class="btn btn-info btn-sm" title="начать запись видео">Start</button>
+									</div>
+								</div>
+<!-- панель масштабирования отражения фоновой картинки -->								
+							<div style="margin-top: 0px; margin-bottom: 0px; ">
+							    <p name="form_show" class="clicker">Масштаб, отражение фона <span>+</span></p>
+								<div class="form-row d-none" style="">
+									<div class="form-group col-4">									
+											<input style="width: 33px; display: inline-block;" name="img_main_scale_x"  type="text" class=""  placeholder="scale X" value="1" title="Коэффициент масштабирования фоновой картинки по вертикали"> 
+								
+											<input style="width: 33px; display: inline-block;" name="img_main_scale_y" type="text" class=""  placeholder="scale Y" value="1" title="Коэффициент масштабирования фоновой картинки по горизонтали">
+									</div>									
+									<div class="form-group col-5"> 
+										<div class="form-check" style="display: inline-block;">
+											<input type="checkbox" name="mirror_x"  class="form-check-input" >
+											<label class="form-check-label" for="exampleCheck1">flip-x</label>
+										</div>	
+				
+										<div class="form-check" style="display: inline-block;">
+											<input type="checkbox" name="mirror_y"  class="form-check-input" >
+											<label class="form-check-label" for="exampleCheck1">flip-y</label>
+										</div>	
+									</div>	
+									<div class="form-group col-3">	
+										<button type="button"  style="margin-top: 0px;" name="phone_scale_mirror" class="btn btn-primary btn-sm" title="применить параметры фоновой картинки">apply</button>
+									</div>
+									<div class="form-group col-12">									
+											<input style="width: 33px; display: inline-block;" name="grid_x"  type="text" class=""  placeholder="size X" value="70" title="ширина ячейки сетки, холста"> 	
+											<input style="width: 33px; display: inline-block;" name="grid_y" type="text" class=""  placeholder="size Y" value="50" title="высота ячейки сетки, холста">
+											<button type="button"  style="margin-top: 0px;" name="apply_grid" class="btn btn-primary btn-sm" title="добавить, удалить сетку">apply grid</button>
+											<!--<button type="button"  style="margin-top: 0px;" name="apply_size_canvas" class="btn btn-primary btn-sm" title="установить размер холста">size canvas</button>-->
+									</div>	
+									
+								 </div> 
+							</div>
+<!-- панель кнопок для манипуляции с ввыделением, спрайтами -->								
+								<div class="form-group" name="scale_rotate_area_sprite" style="margin-top: 0px; margin-bottom: 0px; ">
+									<label for="exampleFormControlInput1" style="font-size: 14px; margin: 0px; padding: 0px;">Вращать, масштаб выделение, спрайт.</label>
+									
+										   <div class="form-row" >
+											<div class="form-group col-md-2">
+												<input style="width: 40px;" name="rotate_area" type="text" class=""  placeholder="градус" title="Вращать спрайт или выделенную область">
+											</div>	
+											<div class="form-group col-md-3"> 
+												<div class="form-check">
+													<input type="checkbox" name="smoothing"  class="form-check-input" id="exampleCheck1" title="Включить сглаживание для вращения">
+													<label class="form-check-label" for="exampleCheck1" >smooth</label>
+												</div>	
+											</div>
+											<div class="form-group col-md-7" name="scale_area_class">
+												<input name="scale_x_area"  placeholder="x scale" type="text"    title="Масштабировать область выделения по оси X">
+												<input name="scale_y_area"   placeholder="y scale"  type="text"   title="Масштабировать область выделения по оси Y">
+												<button type="button"  name="scale_x_y" class="btn btn-success btn-sm">scale</button>
+											</div>	
+										   </div>
+										   
+								 </div>
+								<div class="form-group" name="add_rm_index_point">
+									<label for="exampleFormControlInput1" style="font-size: 14px; margin: 0px; padding: 0px;">Добавить, удалить точку, cкруглить угол</label>
+									<div class="form-row">
+										<div class="form-group col-6">
+										
+											<input style="width: 65px;" name="add_index_point" type="text" class=""  placeholder="index+1" title="Добавить точку к замкнутому контуру выделения области">
+			
+										
+											<input style="width: 60px;" name="rm_index_point" type="text" class=""  placeholder="remove" title="Удалить точку из контура выделения области">
+										</div>
+										<div class="form-group col-6">
+										        <input name="radius_index_point" type="text" style="width: 37px; "  placeholder="i" title="индекс точки">
+												<input name="radius_coner" type="text" style="width: 37px; "    placeholder="rad" title="радиус скругления">
+												<button style="padding-right: 2px; padding-left: 2px; position: relative; top: -2px;"  type="button" name="radius_coner_click" class="btn btn-info btn-sm" title="Скруглить угловую точку: индекс точки,  радиус">round</button>
+										</div>		
+									</div>
+								 </div>								 
+                                 <div name="common_btns_class">
+											<select name="asix_xy" style="width: 40px; position: relative; top: 4px;" class="d-none" id="exampleFormControl_" title="Выбрать ось искажения (масштабирования), для оси 'xy': ctrl+click, shift+click - добавить, удалить точку">												
+												<option>xy</option>
+												<option>x</option>
+												<option>y</option>											
+											</select>
+									<button type="button"  style="margin-top: 5px; " name="scale_or_move_point" class="btn btn-warning btn-sm" title="Масштабировать по точкам выделения">Искажать</button>
+									<button type="button"  style="margin-top: 5px;" name="reset_area" class="btn btn-dark btn-sm">Сбросить выделение</button> 
+									<button type="button" style="margin-top: 5px;" name="create_sprite" class="btn btn-success btn-sm">Создать Sprite</button>
+								 </div>
+							<div class="form-row"  style="">	 
+								 <div name="add_border_class" class="d-none" style="margin-top: 5px;">
+										<input name="border_size" type="text" style="width: 50px; "  placeholder="size" title="толщина границы спрайта">
+										<input name="border_color" type="text" style="width: 60px; "    placeholder="color" title="цвет границы спрайта">
+										<button  type="button" name="add_border_click" class="btn btn-warning btn-sm" title="Добавить, удалить границу спрайту">Border</button>
+										<button type="button" style="margin-top: 5px;" name="add_frame_to_sprite" class="btn btn-success btn-sm" title="Добавтить кадр спрайту, (копирует фон под контуром спрайта)">add frame</button>
+										<button type="button" style="margin-top: 5px; margin-left: 2px;" name="change_sprite_frame" class="btn btn-warning btn-sm" title="Заменить текущий кадр новым">change</button>
+										<button type="button" style="margin-top: 5px; margin-left: 2px;" name="rm_frame_to_sprite" class="btn btn-danger btn-sm" title="удалить последний кадр">rm back</button>
+										<button type="button" name="prev_frame_" class="btn btn-success btn-sm" style="margin-top: 5px; margin-left: 2px;" title="показать предыдущий фрейм(картинку)"> << </button>
+										<button type="button" name="next_frame_" class="btn btn-success btn-sm" style="margin-top: 5px; margin-left: 2px;" title="показать следующий фрейм(картинку)">>></button>										
+								 </div>
+								  <button type="button"  style="margin-top: 5px; margin-left: 2px;" name="mirror_x_area" class="btn btn-primary btn-sm" title="Отразить выделенную область, спрайт по горизонтали">flip x</button>
+								  <button type="button"  style="margin-top: 5px; margin-left: 2px;" name="mirror_y_area" class="btn btn-primary btn-sm" title="Отразить выделенную область, спрайт по вертикали">flip y</button>
+							  
+								  <button type="button"  style="margin-top: 5px; margin-left: 2px;" name="clear_phone" class="btn btn-secondary btn-sm" title="Установить прозрачность фона = 0">Очистить фон</button>
+								  <button type="button"  style="margin-top: 5px; margin-left: 2px;" name="operation_with" class="btn btn-primary btn-sm d-none">Работать с фоном</button> 
+								 
+							</div>
+							
+								  
+							</form>
+<!-- массив спрайтов --->							
+						<ul data-sprites="array" class="list-group" style="margin-top: 10px; margin-bottom: 10px; max-height: 300px; overflow: auto;">
+							<div  class="sprites-settings">
+							  <div class="form-row">
+							     <div class="form-group col-12" >
+								    
+									<input type="checkbox" name="show_box" checked  title="Показать граници спрайта">
+									<label class="form-check-label" style="font-size: 14px;"  for="exampleCheck1" title="Показать границы спрайта">box</label>	
+									<input type="checkbox" name="show_points"  title="Показать точки контура">
+									<label class="form-check-label" style="font-size: 14px;" for="exampleCheck1" title="Показать точки контура">points</label>
+								<!--</div>	
+								<div class="form-group col-5">-->
+									<button type="button" style="padding: 2px;"  name="add_control_point" class="btn btn-success btn-sm" title="Добавить текущему спрайту контрольную точку №1 восстановления координат"><svg width="1em" height="1em" style="position: relative; bottom: 2px;" viewBox="0 0 16 16" class="bi bi-dice-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M13 1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3z"/><circle cx="8" cy="8" r="1.5"/></svg></button>
+									<button type="button" style="padding: 2px;"  name="all_to_control_points" class="btn btn-warning btn-sm" title="Вернуть все спрайты на контрольные точки №1"><svg width="1em" height="1em" style="position: relative; bottom: 2px;" viewBox="0 0 16 16" class="bi bi-arrow-left-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm9.5 8.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/></svg></button>
+									<button type="button" style="padding: 2px;" name="add_control_sprite_point" class="btn btn-dark btn-sm" title="Добавить текущему спрайту контрольную точку №2 восстановления координат"><svg width="1em" height="1em" style="position: relative; bottom: 2px;" viewBox="0 0 16 16" class="bi bi-dice-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M13 1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3z"/><circle cx="8" cy="8" r="1.5"/></svg></button>
+									<button type="button" style="padding: 2px;"  name="all_to_control_sprite_points" class="btn btn-secondary btn-sm" title="Вернуть все спрайты на контрольные точки №2"><svg width="1em" height="1em" style="position: relative; bottom: 2px;" viewBox="0 0 16 16" class="bi bi-arrow-left-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm9.5 8.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/></svg></button>									
+									
+									<button type="button"  name="code_edition" style="padding: 2px;" class="btn btn-info btn-sm" title="добавить функции спрайтам: скрыть, отобразить форму">code</button>
+									
+									<button name="form_show" type="button" style="padding: 0px; float: right; position: relative; top: 3px; padding-right: 2px; padding-left: 2px;"  name="" class="btn btn-success btn-sm" title="Скрыть, отобразить список спрайтов">—</button>
+									
+
+								</div>	
+							   </div>	
+							</div>
+					<!---- добавить функции спрайтам	-->	
+						<form data-code_edition_panel="container" class="d-none" name="code_edition_panel" style="margin-top: 0px;" onsubmit="return false" >
+						<div class="form-group">
+							<textarea name="code" rows="4" cols="45" type="text"  class="form-control form-control-sm"  placeholder="this_ - доступ к rootLink, sprites - доступ к спрайтам  sprites_group - доступ к скелетным спрайтам">var tiles=Object.assign({},sprites_group); modules.animation=animationLop(tiles,60,sprites);
+							
+							</textarea>
+						</div>
+							<button type="button" name="apply_code" style="margin-bottom: 10px; margin-top: 5px;" title="Устанавливает modules.animation.isOff = true; затем включает скирпт" class="btn btn-info btn-sm">play</button>
+							<button type="button" name="stop_code" style="margin-bottom: 10px; margin-top: 5px;" title="Выключить цикл - устанавливает modules.animation.isOff = true;" class="btn btn-sm btn-success">stop</button>
+							<button type="button" name="copy_line"  style="margin-bottom: 10px; margin-top: 5px;" class="btn btn-success btn-sm" title="скопировать контур для операций со спрайтаом" >copy line</button>
+							<button type="button" name="test_script" style="margin-bottom: 10px; margin-top: 5px;" class="btn btn-info btn-sm" title="открыть скрипт в новом окне">test</button>
+							<input type="checkbox" name="enable_sprite_events"   title="Включить прослушивание событий клавиатуры и клика мыши спрайтам">
+							<label class="form-check-label" style="font-size: 14px;"  for="exampleCheck1" title="events">events</label>
+							
+						</form>
+					<!--- -->			
+							<div class="sprites">	
+								<li data-sprite="template" class="list-group-item">
+									<input style="width: 90px;" style="font-size: 10px;" name="id" type="text"  placeholder="" title="Изменить id спрайта">
+									<button type="button" name="rm_sprite" class="btn btn-danger btn-sm">remove</button>
+									<button type="button" name="show_sprite" class="btn btn-secondary btn-sm" title="скрыть">hide</button>
+									<button type="button" name="layer_up" class="btn btn-info btn-sm" title="Поднять спрайт на верхний слой">Слой up</button>
+									<button type="button" name="to_control_point" class="btn btn-warning btn-sm" title="Переместить спрайт на контрольную точку №1">ctrl</button>
+									<button type="button" name="stamp" class="btn btn-secondary btn-sm" title="Сделать отпечаток спрайта на фоновом изображении">Штамп</button>
+									<button type="button" name="copy_contur" class="btn btn-warning btn-sm" title="Скоприровать контур спрайта на фоную картинку">Copy contur</button>
+									<button type="button" name="stamp_cursor" class="btn btn-secondary btn-sm" title="Сделать отпечаток спрайта на фоновом изображении с помощью курсора мыши">Штамп курсор</button>
+									<button type="button" name="save_sprite" class="btn  btn-success btn-sm" title="Сохранить спрайт на компьютере в локальном хранилище">Save</button>
+								</li>
+							</div>							
+						</ul>
+<!--добавить цвет, эффект -->							
+							<form name="form_effects" onsubmit="return false" data-form_effects="container" style="margin-top: 10px;">
+								<div class="form-row" name="form_effects_1">
+									<div class="form-group col-md-3">
+											<input type="text" name="color_r"  class="form-control form-control-sm"  placeholder="R 0-255" title="красный">	
+									</div>
+									<div class="form-group col-md-3">
+											<input type="text" name="color_g"  class="form-control form-control-sm"  placeholder="G 0-255" title="зеленый">	
+									</div>
+									
+									<div class="form-group col-md-3"> 										  
+											<input type="text" name="color_b" class="form-control form-control-sm"  placeholder="B 0-255" title="синий">																					
+									</div>	
+									<div class="form-group col-md-3"> 
+											<input type="text" name="color_a"  class="form-control form-control-sm"  placeholder="A 0-255" title="прозрачность">
+									</div>						
+								 </div> 
+								 <div class="form-row" name="form_effects_2">
+									<div class="form-group col-md-8">
+										<label for="exampleFormControlInput1">Цвет пикселя либо формула (+=n, -=n, /=n, *=n)</label>
+									</div>	
+									<div class="form-group col-md-4">	
+										<button type="button"  style="margin-top: 5px;" name="rgba_effect" class="btn btn-primary btn-sm" title="Применить ко всем свойствам или к некоторым (оставить поля пустыми)">Применить к выделению</button>
+									</div>	
+								</div>
+<!-- применить функцию -->								
+							<p name="form_show" class="clicker" style="margin-top: 10px;">Применить функцию  <span>+</span></p>
+							<div class="d-none">
+								<div class="form-row" style="margin-bottom: 10px;">
+										<label for="exampleFormControlInput1">Формула для обработки пикселя R,G,B,A,X,Y,W,H,TMP</label>
+										<textarea name="function_to_pixels" rows="5" cols="45" type="text" class="form-control form-control-sm"  placeholder="R - red, G - green, B - blue, A - opacity, X - индекс текущего пикселя по ширине, Y - индекс текущего пикселя по высоте, W - общая ширина, H - высота, TMP - объект для хранения временных данных между итерациями цикла;
+										
+пример - покрасить черный в красный:        
+if(R+G+B < 70){   R=255; }
+
+пример - сделать белые пиксели прозрачными:
+if(R+G+B > 700){
+A=0;
+}
+
+Для применения эффекта к границе выделения нужно установить толщину граници по x и y в долях от общей ширины и высоты выделения.
+
+пример TMP:    
+if(TMP.num == undefined){
+    TMP.num = 0; 
+ } else {  
+   TMP.num +=1;  
+   if(TMP.num > 7000) 
+   R +=155;
+}"></textarea>
+	                                <div class="form-group col-4">
+										<button type="button"  style="margin-top: 5px;" name="function_to_pixels_click" class="btn btn-primary btn-sm" title="применить ко всему выделению">Применить к выделению</button>
+									</div>
+									<div class="form-group col-2">
+										<input type="text" style="margin-top: 5px; with: 50px;"  name="border_with_coeff_x" class="form-control form-control-sm" value="0.1"  placeholder="толшина границы x" title="толщина границы x - процент/100 от размера выделения по оси X">
+										<input type="checkbox" name="border_with_pixel_box" title="установить толщину в пикселях"  class="" >
+										<input type="text" style="margin-top: 5px; with: 50px;"  name="border_with_pixel" class="form-control form-control-sm" value="20"  placeholder="толшина границы" title="толщина границы в пикселях">
+										<input type="text" style="margin-top: 5px; with: 50px;"  name="step_iteration" class="form-control form-control-sm" value="1"  placeholder="шаг итерации в пикселях" title="шаг итерации в пикселях">
+									</div>
+									<div class="form-group col-2">
+										<input type="text" style="margin-top: 5px; with: 50px;"  name="border_with_coeff_y" class="form-control form-control-sm" value="0.1"  placeholder="толшина границы y" title="толщина границы y - процент/100 от размера выделения по оси Y">
+										<input type="checkbox" name="border_inner_outer_box" title="внутрь от границы, или наружу"  class="" >
+										<input type="text" style="margin-top: 5px; with: 50px;"  name="num_iteration" class="form-control form-control-sm" value="1"  placeholder="количество итераций" title="количество итераций">
+									</div>	
+	                                <div class="form-group col-4">
+										<button type="button"  style="margin-top: 5px;" name="function_to_border_click" class="btn btn-primary btn-sm" title="применить к границе выделения">К границе выделения</button>
+									</div>										
+								</div>
+								<div class="form-row" style="margin-bottom: 10px;">
+										<label for="exampleFormControlInput1">Формула для создания контура</label>
+										<textarea name="function_to_contur" rows="5" cols="45" type="text" class="form-control form-control-sm" 
+											placeholder="Формула для создания контура: area - массив с точками в формате [ [x1,y1], [x2,y2],... ] 
+
+Пример - нарисовать контур в форме квадрата:
+area = [ [10,10], [10,200], [200, 200], [200, 10]];
+
+
+Пример использовать функцию модуля для рисования звезды:
+(сперва нужно загрузить модуль)
+
+area = modules.drawStar(200, 200, 4, 70, 30);
+"></textarea>
+										<button type="button"  style="margin-top: 5px;" name="function_to_contur_click" class="btn btn-primary btn-sm">Создать контур</button>
+								</div>
+							</div>	
+							</form>	
+<!-- загрузить, удалить сохраненный спрайт 	-->						
+							<div data-save_sprites="array" class="">
+								<button  type="button" name="load_save_sprites" class="btn btn-info btn-sm">Показать сохраненные спрайты</button>
+							
+								<ul  class="list-group" style="max-height: 300px; overflow: auto; margin-top: 10px; ">
+									<li data-save_sprite="template" class="list-group-item" >
+										<span name="id"></span>
+										<button type="button" name="create_save_sprite" class="btn btn-primary btn-sm">Создать</button>
+										<button type="button" name="rm_save_sprite" class="btn btn-danger btn-sm">Удалить</button>
+										<input type="checkbox" name="to_beginning_coordinats"  title="Отобразить в начале координат">
+										<label class="form-check-label" for="exampleCheck1" >top left</label>										
+									</li>
+								</ul>
+<!-- сохранить, загрузить проект -->								
+                               <div  style="margin-top: 10px;" >
+									<input  name="project_name" type="text" style="width: 80px; position: relative; top: 3px;"  placeholder="name" title="Название проекта">
+									<button   type="button" name="save_project" class="btn btn-info btn-sm" title="Сохранить все спрайты и фоновую картинку в json проект">Save project</button>
+									<label  name="load_project_click" class="inp-file" style="position: relative; top: 3px; padding-top: 4px; padding-bottom: 3px;" for="load_project_json" title="Загрузить сохраненный проект">Load project</label>
+									<input  name="load_project" type="file" class="form-control-file form-control-sm"  style="position: relative; top: 0px; visibility: hidden;" id="load_project_json">								
+								</div>
+								
+							</div>
+							
+                        
+				</div><!-- end col-4 -->
+				
+<!-- загрузить модуль изменить настройки-->
+				
+						<form class="col-12" name="form_load_module" style="margin-top: 0px;" onsubmit="return false" data-form_load_module="container" style="margin-top: 10px;">
+                    		
+							<p name="form_show" class="clicker">Загрузить модуль, изменить настройки <span>+</span></p>
+
+							<div class="d-none">
+							    <div class="form-group form-row ">
+									<div class="form-group col-9">
+										<input type="text" name="module_url"  class="form-control form-control-sm"  placeholder="module url" value="https://sergeyovechkin.github.io/collage_n/js/modules/addDrawCirclePanel.js">	
+									</div>
+									<div class="form-group col-3">
+										<button type="button" name="load_module" class="btn btn-info btn-sm">Загрузить модуль</button>										
+									</div>
+								</div>
+								<div class="form-group form-row ">
+								    <div class="form-group col-9">
+										<textarea name="colagen_settings" rows="5" cols="45" type="text"  class="form-control form-control-sm"  title="общие настройки, автозагружаемые модули и стили при старте приложения"></textarea>
+									 </div>
+									 <div class="form-group col-3">
+									     <button type="button" name="save_colagen_settings" class="btn btn-info btn-sm">Сохранить</button>
+									 </div>
+								</div>			
+								<div class="alert alert-info" role="alert">
+								   <ul>
+								    <li>Модулями можно расширять стандартный набор функций приложения. В примере выше подкулючается модуль рисования окружностей кликом мыши.</li>
+									<li>Также функции модулей можно использовать для обработки пикселей либо создания контура.</li>
+									<li>"./js/modules/drawStar.js" - функция для создания контура в форме звезы: area = modules.drawStar(200,200, 4,70,30);</li>
+									<li>В настройках можно сохранить модуль для автоматичкской загрузки при старте приложения, для этого нужно ввести имя модуля и его url, например: "modules" : {
+									"spriteMatrix" : "./js/modules/spriteMatrix.js" },</li>
+									<li>Отменить загрузку модуля можно закомментировав его url знаком #  "#./url_module"</li>
+									<li>Аналогично можно добавить стили со шрифтами.</li>
+									<li>При сохранении настройки нужно убедиться в ее валидности. Для возврата к настройкам по умолчанию нужно сохранить пустой объект.</li>								
+								   </ul>
+								</div>
+							</div>
+							</p>	
+						</form>
+<!-- -->						
+						
+			</div><!--row-->
+		</div><!-- end container-fluid -->
+	<!--assets-->
+	     <script src="./js/colorpicker/jscolor.js"></script>
+	<!-- --->
+       <script src="./js/sprite_bones.js"></script>	
+		<script src="./js/draw_functions.js"></script> 
+	   <script src="./js/htmlix.js"></script>
+	   <script src="./js/sprites.js"></script>
+	    
+	   <script src="./js/functions.js"></script>	   
+	   <script src="./js/interface.js"></script>
+	     <script src="./js/main.js"></script>
+
+    </body>
+	
+</html>

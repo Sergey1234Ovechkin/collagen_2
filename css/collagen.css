@@ -1,0 +1,153 @@
+body, html { 
+	   position: relative; 
+       margin: 0; 
+       padding: 0;
+	   height: 100%;
+     }
+#canvas_container{
+	position: relative;	
+	
+	
+}
+.canvas-container{
+
+   position: relative;
+	width: 100%;	
+	height: 94vh;
+	overflow: hidden;
+	
+} 
+canvas { 
+     
+     width: 100%;     
+	 height: 100%px; 
+	 margin: 0; 
+     padding: 0;
+	 border: 1px solid green;
+	 
+
+   }
+ .list-group-item:hover{
+       cursor: pointer;
+ 
+ }
+.form-group {
+    margin-bottom: 0.0rem;
+}
+
+[data-sprites] { 
+
+	border: 1px solid black;
+	padding: 2px;
+
+}
+[data-save_sprites]{
+  margin-top: 10px;  
+  margin-bottom: 10px; 
+  padding: 5px;
+ } 
+
+[data-sprite], [data-sprites_group] {
+
+		background-color: #f5e2d2;
+		padding: .0rem .0rem !important;
+}
+[data-sprite] button, [data-sprites_group] button, [data-save_sprite] button, [data-control_points] button{
+
+	padding: 0px;
+	padding-left: 2px;
+	padding-right: 2px;
+
+}
+.inp-file:hover{
+	cursor: pointer;
+}
+.inp-file{
+	background-color: #28a745;
+	color: white;
+	padding: 2px;
+	border-radius: 3px;
+}
+.inp-file:hover{
+	background-color: #329649;
+}
+[name="load_img"]{
+	position: absolute;
+	top: 0px;
+	visibility: hidden;
+}
+.panel_phone_img_1 {
+	//background-color: #f5e2d2;
+	margin-bottom: 5px;
+	
+} 
+ .panel_phone_ing_1 .form-group{
+	margin-top: 5px;
+	margin: 0px;
+ }
+ .form-row .form-group{
+	margin-bottom: 3px;
+ }
+ [name="scale_x_area"], [name="scale_y_area"]{
+	position: relative;
+	top: 2px;
+	width: 45px;
+	margin-top: 0px;
+	font-size: 16px;
+ }
+ [name="img_main_scale_x"], [name="img_main_scale_y"], [name="control_sprite_point_x"], [name="control_sprite_point_y"] {
+	 width: 45px;
+		 
+ }
+ [name="control_sprite_point_x"], [name="control_sprite_point_y"]{
+	 
+	 font-size: 14px;
+	 
+ }
+ 
+ .d-none{
+	 display: none;
+	 
+ }
+ .clicker{
+	// border: 1px solid #20c997;
+	 padding: 5px;
+	 border-radius: 1px;
+	 font: caption;
+	 background-color: #f8f9fa;
+	 font-weight: bold;
+	 color: #155724;
+ }
+ .clicker span{
+	 color: #efcb5c; 
+	 font-size: 25px;
+	 position: relative;
+	 top: 3px;
+	 
+ }
+ .clicker:hover{
+	 cursor: pointer;
+	 background-color: #20c997;	 
+ }
+ 
+ 
+ 
+ 
+ 
+ .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

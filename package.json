@@ -1,0 +1,23 @@
+{
+  "name": "colage_n",
+  "version": "1.0.0",
+  "description": "приложение для создания коллажей и спрайтов",
+  "main": "app.js",
+  "email": "ovechkin.sergey123@mail.ru",
+  "license": "Apache License Version 2.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeyOvechkin/colage_n.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SergeyOvechkin/colage_n.js/issues"
+  },
+  "homepage": "https://github.com/SergeyOvechkin/colage_n#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}
