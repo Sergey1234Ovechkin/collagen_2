@@ -42,6 +42,7 @@
 	modules.mousedown =  function (point){}
 	modules.mouseup =  function (point){}
 	modules.keydown  = function (key){}	 
+	modules.keyup  = function (key){}	
 	 
 	 
 
@@ -61,6 +62,13 @@ window.onload = function(){
 		 //console.log(event.key);
 		 if(event.key == "Control" || event.key == "Shift" )return;
 		  HM.eventProps["emiter-keydown"].setEventProp(event.code);
+    });
+	
+	document.addEventListener('keyup', function(event) {
+		 // event.preventDefault();
+		 //console.log(event.key);
+		 if(event.key == "Control" || event.key == "Shift" )return;
+		  HM.eventProps["emiter-keyup"].setEventProp(event.code);
     });
 	
 	

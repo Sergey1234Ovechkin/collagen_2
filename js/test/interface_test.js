@@ -174,12 +174,16 @@ var StateMap = {
 	canvas: { //канвас	
 		container: "canvas",
 		props: [["mousedown", "mousedown", ""], ["mousemove", "mousemove", ""], ["mouseup", "mouseup", ""],
-		         ["mousewheel", "mousewheel", ""], ["move_contur", "emiter-keydown", ""],				 
+		         ["mousewheel", "mousewheel", ""], ["move_contur", "emiter-keydown", ""], ["keyup", "emiter-keyup", ""],				 
 		         ],
 		methods: {
             mousewheel: function(){
                 event.preventDefault();			 
 				this.$$("emiter-mousewheel-canvas").set(event.deltaY);
+			},
+			keyup: function(){
+				 var key = this.$$("emiter-keyup").prop;
+				modules.keyup(key);
 			},
             move_contur: function(){ ///события кнопок клавиатуры
 			 var key = this.$$("emiter-keydown").prop;
@@ -393,7 +397,7 @@ var StateMap = {
 			["code", "inputvalue", "[name='code']"], ["code_form", "click", "[name='code']"],
 			["copy_line", "click", "[name='copy_line']"], ["click_spr", "emiter-mousedown-canvas", ""],
 			["enable_sprite_events", "click", "[name='enable_sprite_events']"], ["sprite_events_checkbox", "checkbox", "[name='enable_sprite_events']"],
-			["keydown", "emiter-keydown", ""],  
+			["keydown", "emiter-keydown", ""], //["keyup", "emiter-keyup", ""], 
 			["stop_code", "click", "[name='stop_code']"],
 			//["click_spr_done", "emiter-mouseup-canvas", ""],
 		],
@@ -956,6 +960,7 @@ var StateMap = {
 	eventEmiters: {		
 		["emiter-create-sprite"] : {prop: ""}, //событие создания спрайта
 		["emiter-keydown"] : {prop: "key"}, //событие нажатия кнопки клавиатуры
+		["emiter-keyup"] : {prop: "key"}, //событие нажатия кнопки клавиатуры
 		["emiter-mousemove-canvas"] : {prop: ["x", "y"]}, //событие движения курсора по канвас и массив с координатами точки 
 		["emiter-mousedown-canvas"] : {prop:  ["x", "y"]},
 		["emiter-mouseup-canvas"] : {prop:  ["x", "y"]},
