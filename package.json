@@ -1,6 +1,6 @@
 {
   "name": "colage_n",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "приложение для создания коллажей и спрайтов",
   "main": "app.js",
   "email": "ovechkin.sergey123@mail.ru",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/SergeyOvechkin/colage_n#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "socket.io": "^4.6.1"
+    "forever": "^4.0.3",
+    "socket.js": "^0.1.4"
   }
 }
