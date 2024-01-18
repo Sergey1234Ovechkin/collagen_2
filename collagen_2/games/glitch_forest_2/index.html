@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <!-- 
+      This is the main Handlebars template for the site 
+      - When the user visits the homepage or submits a color the app calls the endpoints in server.js
+      - The server script passes data in here and the Handlebars code builds it into the HTML page
+    -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Import the webpage's stylesheet -->
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
+<link rel="stylesheet" href="./public/bootstrap.min.css">
+<link rel="stylesheet" href="./public/collagen_test.css">
+    <!-- This is a handlebars IF statement
+         Checking for a custom "color" parameter from server.js -->   
+  </head>
+  <body>
+    
+    		<div class="container-fluid" >
+			<div class="row main-row">
+				<div  class="col-12 col-sm-12 col-md-12 col-lg-12" id="canvas_container">
+<!--canvas-->				
+						<div  class="canvas-container" style="padding-right: 5px; padding-left: 5px;">						
+							<canvas data-canvas="container"  id="canvas" style=""></canvas>
+							<!--форма отправки сообщений -->
+							<div data-user_message="container" class="form-group " style="position: fixed;  top: 2px; right: 2px; z-index:5">
+								<input name="user_msg" type="text"  style="width: 270px; padding: 0px; font-size: 14px; margin-top: 2px;"  placeholder="" title="сообщение">
+								<button type="button"  name="user_msg_btn" class="btn btn-info btn-sm"  title="сообщение">message</button>	
+							</div>
+							<div data-chose_personage="container" class="form-group " style="display: none; padding: 10px; background-color: white; position: fixed;  top: 5px; left: 5px; z-index:5">
+								<p>Выберите персонажа:</p>
+								<div class="form-check">
+									<input  class="form-check-input" type="radio" name="personage_1" id="flexRadioDefault1">
+									<label class="form-check-label" for="flexRadioDefault1">
+										personage_1
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="personage_2" id="flexRadioDefault2">
+									<label class="form-check-label" for="flexRadioDefault2">
+										personage_2
+									</label>
+									</div>	
+							</div>
+							
+                           						
+						</div>
+				</div><!-- end col-7 -->
+<!-- -->												
+			</div><!--row-->
+		</div><!-- end container-fluid -->
+   
+    
+    
+    
+    <!-- -->
+   	
+	   <script src="./public/draw_functions.js"></script> 
+	   <script src="./public/htmlix.js"></script>
+	   <script src="./public/sprites.js"></script>    
+	   <script src="./public/functions.js"></script>	   
+	   <script src="./public/tiles.js"></script>
+	   
+	   
+	   
+	   <script src="public/interface_games.js"></script>	   
+	   	
+	   
+	   <script src="./public/socket.js"></script>
+
+	   <!--основной скрипт игры --->
+	   <script src="./public/game_script.js"></script>
+	   
+	   <!--скирип загрузки приложения  -->
+	   <script src="./public/main_games.js"></script>
+    
+    
+    
+  </body>
+</html>
+
