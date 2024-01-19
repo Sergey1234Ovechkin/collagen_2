@@ -127,21 +127,17 @@ function stopPersonage(key){
 		 } 
 	 } 	 
  }
-  ///определение направления движения
+
+   ///определение направления движения
  function directionMove(point1, point2){ ////////////определение угла поворота точки	  
-	            var an =  Math.atan2(point2[1]-point1[1], point2[0]-point1[0]); 
-				var direction = "";
-				    an = an*180/Math.PI;
-					if(an >=45 &&  an < 135 ){
-						direction = "bottom";
-					}else if(an >= 135 &&  an < 181 || an <= -135){
-						direction = "left";
-					}else if(an >= -135 &&  an < -45){
-						direction = "top";
-					}else if(an >= -45 &&  an < 45){
-						direction = "right";
-					}				
-				return direction ;
+	           var distance = [ point1[0] - point2[0] , point1[1] - point2[1] ];
+			   var osix = Math.abs(distance[0])/Math.abs(distance[1]);
+			   var direction = null;
+			   if(osix > 1){				   
+				   if(distance[0] < 0){return "right";}else{return "left";}
+			   }else{				  
+					if(distance[1] <0){return "bottom";}else{return "top";}
+			   }
  }
 
 
