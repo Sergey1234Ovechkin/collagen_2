@@ -1,6 +1,7 @@
 
 //адрес json файла спрайтов
-var gameUrl = "http://localhost:3000/collagen_2/games/forest_2/sprites.json";
+var gameUrl = window.location.origin + "/collagen_2/games/forest_2/sprites.json";
+console.log(gameUrl);
 var personageId = "personage";
 //уникальное id для передачи данных на сервер (т.к. персонажи одинаковые для всех)
 var userId = "user_" + Math.floor(Math.random() * 1000);
@@ -124,10 +125,10 @@ fetch(gameUrl)
 				 setInterval(function(){modules.fire_1.nextFrame();}, 350);
 				 //console.log(tiles_common);
 				// createSocket();
-				 
+				 HM.state.chose_personage.htmlLink.style.display = "block";
 				 //alert("игра загружена");
 				 //////////////переопределяем размер карты
-                  maxTranslate = [-1000, -0];
+                  maxTranslate = [-1000, -1000];
 				
 	  })
   .catch((err) => console.error(`Fetch problem: ${err.message}`));
@@ -159,7 +160,7 @@ function createSocket(){
   socket.receive('coord', function(data) {
 	 //обновляем объекты сцены в случае добавления или выхода игрока 
 	 if(Object.keys(data).length != numUsers){
-		 console.log(Object.keys(data).length);
+		// console.log(Object.keys(data).length);
 		//удаляем все объекты сцены
 		tiles_common.splice(0, tiles_common.length);
 		//создаем исходные обекты
@@ -185,7 +186,7 @@ function createSocket(){
 		           tiles_common[i] = modules.personage;
 	            }
          }
-     console.log(tiles_common);
+    // console.log(tiles_common);
 	 numUsers  = Object.keys(data).length;//обновляем количество игроков
 	 };
 	///включаем анимацию игроков 
@@ -292,6 +293,11 @@ CollageSprite.prototype.render_ = function(){
 		methods: {
 			user_msg_btn: function(){
 			    var text  = this.props("user_msg").getProp(); 
+                var isKyr = function (str) {
+                   return /[а-я]/i.test(str);
+                 }
+                if(isKyr(text)){alert("чат не поддерживает кирилицу"); return};
+
 				////тестовое сообщение
                 modules.personage.message = text;
 				//console.log(text);
