@@ -31,6 +31,8 @@
 	 //////////////смещение координат
      var maxTranslate = [-2000, -2000];	 
 	 var ctxTranslate = [0, 0];
+	 var isMoveCamera = true;
+	 
 	 var mode  = "edit"; //редактирование "animation" -анимация
 	 var tiles_common = []; ///массив спрайтов для анимации
 	 var tiles_bg = [];   //массив спрайтов фона

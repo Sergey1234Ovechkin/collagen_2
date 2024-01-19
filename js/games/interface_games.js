@@ -4,7 +4,8 @@ var StateMap = {
 	canvas: { //канвас	
 		container: "canvas",
 		props: [["mousedown", "mousedown", ""], ["mousemove", "mousemove", ""], ["mouseup", "mouseup", ""],
-		         ["mousewheel", "mousewheel", ""], ["move_contur", "emiter-keydown", ""], ["keyup", "emiter-keyup", ""],				 
+		                                            ///события кнопок клавиатуры
+		         ["mousewheel", "mousewheel", ""], ["keydown", "emiter-keydown", ""], ["keyup", "emiter-keyup", ""],				 
 		         ],
 		methods: {
             mousewheel: function(){
@@ -15,64 +16,32 @@ var StateMap = {
 				 var key = this.$$("emiter-keyup").prop;
 				modules.keyup(key);
 			},
-            move_contur: function(){ ///события кнопок клавиатуры
+            keydown: function(){ ///события кнопок клавиатуры
 			 var key = this.$$("emiter-keydown").prop;
-                modules.keydown(key);			 
-				if(key == "KeyW"){ // смещение экрана кнопками w a s d				
-					ctxTranslate[1]+=5;
-					if(ctxTranslate[1] > 0)ctxTranslate[1] = 0;
+                modules.keydown(key);
+					if(isMoveCamera){				
+						if(key == "KeyW"){ // смещение экрана кнопками w a s d				
+							ctxTranslate[1]+=5;
+							if(ctxTranslate[1] > 0)ctxTranslate[1] = 0;
 					
-					if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
+							if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
 					
-				}else if(key == "KeyS"){
-					ctxTranslate[1]-=5;
-					if(ctxTranslate[1] < maxTranslate[1])ctxTranslate[1] = maxTranslate[1];
-					if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
-				}
-				else if(key == "KeyA"){
-					ctxTranslate[0]+=5;
-					if(ctxTranslate[0] > 0)ctxTranslate[0] = 0;
-					if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
-				}else if(key == "KeyD"){
-					ctxTranslate[0]-=5;
-					if(ctxTranslate[0] < maxTranslate[0])ctxTranslate[0] = maxTranslate[0];
-					if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
-				}
-              if(this.$props("operationWith") != "common")return; ///движение контура стрелками клавиатуры				
-              var isDraw = false;				
-			  var distance = areaDistanceStep;
-			 
-			  var area_1 = this.$props("commonProps").area_1;
-			  var isEndArea_1 = this.$props("commonProps").isEndArea_1;
-			  
-			 if(key == "ArrowUp"){				 
-				area_1 = getCutSize(area_1, 0, distance);
-				this.$props("commonProps").area_1 = area_1;
-				this.$props("commonProps").area_2 = this.$props("commonProps").area_1.slice(0);
-                isDraw = true;				
-			 }else if(key == "ArrowDown"){
-				area_1 = getCutSize(area_1, 0, distance*-1);
-				this.$props("commonProps").area_1 = area_1;
-				this.$props("commonProps").area_2 = this.$props("commonProps").area_1.slice(0);
-				isDraw = true;
-			 }else if(key == "ArrowRight"){			 
-				area_1 = getCutSize(area_1, distance*-1, 0);
-				this.$props("commonProps").area_1 = area_1;
-				this.$props("commonProps").area_2 = this.$props("commonProps").area_1.slice(0);	
-                isDraw = true;				
-			 }else if(key == "ArrowLeft"){
-				area_1 = getCutSize(area_1, distance, 0);
-				this.$props("commonProps").area_1 = area_1;
-				this.$props("commonProps").area_2 = this.$props("commonProps").area_1.slice(0);
-                isDraw = true;				
-			 }
-			 if(isDraw){
-					    this.$methods().renderAll(false, {drawAreaPoints: false});
-						ctx.save();///////////////
-						ctx.translate(ctxTranslate[0], ctxTranslate[1]);
-						drawAreaPoints(area_1, isEndArea_1);
-						ctx.restore();	 
-			 }		 
+						}else if(key == "KeyS"){
+							ctxTranslate[1]-=5;
+							if(ctxTranslate[1] < maxTranslate[1])ctxTranslate[1] = maxTranslate[1];
+							if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
+						}
+						else if(key == "KeyA"){
+							ctxTranslate[0]+=5;
+							if(ctxTranslate[0] > 0)ctxTranslate[0] = 0;
+							if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
+						}else if(key == "KeyD"){
+							ctxTranslate[0]-=5;
+							if(ctxTranslate[0] < maxTranslate[0])ctxTranslate[0] = maxTranslate[0];
+							if(mode == "edit")this.$methods().renderAll(false, {drawAreaPoints: false});
+						}
+							if(this.$props("operationWith") != "common")return; ///движение контура стрелками клавиатуры				
+					}
 			},			
 			mousedown: function(){
 					var point = getCanvasPoint(event, this.parent.htmlLink);
@@ -141,108 +110,6 @@ var StateMap = {
 			}			
 		}		
 	},
-
-	/*
-	sprites: { //спрайты
-		selector: ".sprites",
-		arrayProps: [
-			["listen_create_sprite", "emiter-create-sprite", ""],
-			//["show_box_click", "click",  "[name='show_box']"], 
-			//["show_box", "checkbox",  "[name='show_box']"],
-			//["show_points_click", "click",  "[name='show_points']"], 
-			//["show_points", "checkbox",  "[name='show_points']"], 
-			//["add_control_point", "click",  "[name='add_control_point']"], //контрольные точки-координаты центра спрайта на канвас
-			//["all_to_control_points", "click",  "[name='all_to_control_points']"],
-			
-			//["add_control_sprite_point", "click",  "[name='add_control_sprite_point']"], //контрольные точки спрайтов на спрайт листах
-			//["all_to_control_sprite_points", "click",  "[name='all_to_control_sprite_points']"],
-			
-			//["form_show", "click", "[name='form_show']"], ["form_style", "class", "div.sprites"],//отобразить скрыть список спрайтов
-			
-			["code_edition", "click", "[name='code_edition']"],//редактор кода
-			["code_edition_panel_class" , "class",  "[name='code_edition_panel']"], ["apply_code", "click", "[name='apply_code']"],
-			["code", "inputvalue", "[name='code']"], ["code_form", "click", "[name='code']"],
-			//["copy_line", "click", "[name='copy_line']"], 
-			["click_spr", "emiter-mousedown-canvas", ""],
-			["enable_sprite_events", "click", "[name='enable_sprite_events']"], ["sprite_events_checkbox", "checkbox", "[name='enable_sprite_events']"],
-			["keydown", "emiter-keydown", ""], //["keyup", "emiter-keyup", ""], 
-			["stop_code", "click", "[name='stop_code']"],
-			//["click_spr_done", "emiter-mouseup-canvas", ""],
-		],
-		arrayMethods: {
-			enable_sprite_events: function(){ //отключить, включить прослушивание событий клика мыши, клавиатуры
-				var sprite_events_checkbox = this.props("sprite_events_checkbox").getProp();
-				if(sprite_events_checkbox){
-					this.props("click_spr").enableEvent();
-					this.props("keydown").enableEvent();
-				}else{
-					this.props("click_spr").disableEvent();
-					this.props("keydown").disableEvent();					
-				}				
-			},
-			click_spr: function(){//собития кликов по спрайтам
-				var sprites = this.$props().sprites;
-				for(i in sprites){				 
-					sprites[i].cursorOver_(this.emiter.prop, false);
-					if(sprites[i].cursorOver)sprites[i].click(this.emiter.prop);					
-				}				
-			},
-			keydown: function(){//событие клавиатуры для спрайтов
-				var sprites = this.$props().sprites;
-				var key  = this.emiter.prop;
-				for(i in sprites){
-					sprites[i].keydown(key);
-				}
-								
-			},
-			apply_code: function(){//включает анимацию, скрипт
-				mode = "animation";
-				if (modules.animation) modules.animation.isOff = true;
-				updateCommonTiles(this.$props().sprites);
-				updateBgTiles(this.$props().sprites);
-				var script = this.props("code").getProp();
-				createCode(script, this.rootLink, this.rootLink.stateProperties.sprites, this.rootLink.stateProperties.sprites_group);
-				this.$$("emiter-operation-with").set("code");
-				
-			},
-			stop_code: function(){
-				mode = "edit";
-				if (modules.animation) modules.animation.isOff = true;
-				updateCommonTiles(this.$props().sprites);
-				updateBgTiles(this.$props().sprites);				
-			},						
-			code_form: function(){
-				this.$$("emiter-operation-with").set("code");
-				
-			},
-			code_edition: function(){ //отобразить скыть редактор кода 
-					if(this.prop == null){				
-					this.prop = true;
-					this.props("code_edition_panel_class").removeProp("d-none");
-					this.htmlLink.innerText="—";
-				}else{
-					this.prop = null;
-					this.props("code_edition_panel_class").setProp("d-none");
-					this.htmlLink.innerText="code";
-				}
-			},
-			listen_create_sprite: function(){			
-				var id = this.emiter.prop;				
-				for(var i=0; i < this.parent.data.length; i++){					
-					this.parent.data[i].props.class.removeProp("active");					
-				}
-                 var sprite = this.$props().sprites[id];  				
-				var container = this.parent.add({id: id, class: "active", show_sprite: (sprite.show ? "hide" : "show") }, 0);	
-                container.props.id.prop = id;				
-			},
-			
-		},
-		container: "sprite",
-		props: [ ],
-		methods : {			
-		},		
-	},
-    */
 	//общие переменные, свойства 
 	stateProperties: {		
 		operationWith: "common", ///"spriteID" операция с объектом - спрайтом или общей картинкой "common"
