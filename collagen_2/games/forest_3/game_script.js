@@ -132,7 +132,6 @@ function stopPersonage(key){
  function directionMove(point1, point2){ ////////////определение угла поворота точки	  
 	           var distance = [ point1[0] - point2[0] , point1[1] - point2[1] ];
 			   var osix = Math.abs(distance[0])/Math.abs(distance[1]);
-			   var direction = null;
 			   if(osix > 1){				   
 				   if(distance[0] < 0){return "right";}else{return "left";}
 			   }else{				  
@@ -175,6 +174,7 @@ function animation(){
 				 //console.log(tiles_common);
 				// createSocket();
 				 HM.state.chose_personage.htmlLink.style.display = "block";
+				 HM.state.user_message.props.user_msg.setProp("");
 				 //alert("игра загружена");
 				 //////////////переопределяем размер карты
                  maxTranslate = [-1000, -1000];
