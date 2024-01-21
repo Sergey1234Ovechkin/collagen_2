@@ -206,7 +206,8 @@ function animation(){
 				 
 				 //отображаем панель выбора персонажа
 				 HM.state.chose_personage.htmlLink.style.display = "block";
-
+				 //////удаляем надпись load game
+                 HM.state.user_message.props.user_msg.setProp("");
 				 //////////////переопределяем размер карты
                  maxTranslate = [-1000, -1000];
 }
