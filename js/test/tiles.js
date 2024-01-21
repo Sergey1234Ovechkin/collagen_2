@@ -51,20 +51,26 @@ Tile.prototype.render_ = function(){
  }
 
 
-//цикл для анимации спрайтов 
+//цикл для анимации спрайтов
 function animationLopLayer(spritesArrBg, spritesArr, speed, sprites){                
   //spritesArrBg.sort(compare);
-  
-  
+ 
   var off = {isOff: false};
   let prev = performance.now();
   function lop() {
-	  spritesArr.sort(compare);
-	              ctx.save();///////////////
-            ctx.translate(ctxTranslate[0], ctxTranslate[1]);
-    var lt = performance.now();
-    var time = lt - prev;	
-    if (time > speed ){		    
+
+	 var lt = performance.now();
+     var time = lt - prev; 
+     if (time > speed ){
+	  //очистка канвас 
+  	  ctx.translate(0, 0);
+	  ctx.clearRect(0, 0, srcWidth , srcHeight);
+	 // ctx.fillRect(0, 0 srcWidth , srcHeight);
+	  
+	        spritesArr.sort(compare);
+	        ctx.save();///////////////
+            ctx.translate(ctxTranslate[0], ctxTranslate[1]);	
+    ///
 		    prev = lt;			
 	        // ctx.putImageData(saveImg, 0, 0);
 			  //ctx.clearRect(0, 0, srcWidth , srcHeight);
@@ -86,8 +92,43 @@ function animationLopLayer(spritesArrBg, spritesArr, speed, sprites){
 		if (a.point[1]+a.height  == b.point[1]+b.height ) return 0; // если равны
 		if (a.point[1]+a.height  < b.point[1]+b.height ) return -1; // если первое значение меньше второго
 	}
+} 
+/*function animationLopLayer(spritesArrBg, spritesArr, speed, sprites){                
+  //spritesArrBg.sort(compare);
+  
+  
+  var off = {isOff: false};
+  let prev = performance.now();
+  function lop() {
+	  spritesArr.sort(compare);
+	              ctx.save();///////////////
+            ctx.translate(ctxTranslate[0], ctxTranslate[1]);
+    var lt = performance.now();
+    var time = lt - prev;	
+    if (time > speed ){		    
+		    prev = lt;			
+	         ///ctx.putImageData(saveImg, 0, 0);
+			  //ctx.clearRect(0, 0, srcWidth , srcHeight);			  
+			  for(var i = 0; i< spritesArrBg.length;  i++){
+				spritesArrBg[i].render_();
+			  }
+			  for(var i = 0; i< spritesArr.length;  i++){
+				spritesArr[i].render_();
+			  }
+	} 
+	ctx.restore();
+	if(!off.isOff)requestAnimationFrame(lop);
+  }
+  lop();
+ return  off;
+ 
+	function compare(a, b) {
+		if (a.point[1]+a.height > b.point[1]+b.height ) return 1; // если первое значение больше второго
+		if (a.point[1]+a.height  == b.point[1]+b.height ) return 0; // если равны
+		if (a.point[1]+a.height  < b.point[1]+b.height ) return -1; // если первое значение меньше второго
+	}
 }
-
+*/
 //включает следующюю картинку из колекции 
 Tile.prototype.nextFrame = function(index){
 	this.frame_index +=1;
@@ -156,5 +197,12 @@ function updateBgTiles(sprites){
 	tiles_bg = [];
 	for(var i=0; i<tiles_bg_save.length; i++){
 		if(sprites[tiles_bg_save[i].parent])tiles_bg.push(new Tile(tiles_bg_save[i].id, sprites[tiles_bg_save[i].parent], tiles_bg_save[i].point));
+	}
+}
+
+function updateCollisionTiles(){ 
+	tiles_collision = [];
+	for(var i=0; i<tiles_collision_save.length; i++){
+		tiles_collision.push(tiles_collision_save[i]);
 	}
 }

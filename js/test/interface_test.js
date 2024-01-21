@@ -632,9 +632,10 @@ var StateMap = {
 		
 		props: [ ["code_form", "inputvalue", "[name='code_form']",],  ["add_tile_bg", "click", "[name='add_tile_bg']",], 
 				  ["add_tile_common", "click", "[name='add_tile_common']",],  ["create_scene", "click", "[name='create_scene']",],
+				  ["add_collision", "click", "[name='add_collision']",]
 			],
 		methods: {
-			add_tile_bg: function(){
+			add_tile_bg: function(){///добавляент объект бекграунда в массив  tiles_bg
 									
 			   var text = '[ "tile_bg"';
 				if(this.$props().sprites[this.$props("operationWith")]){						
@@ -642,6 +643,9 @@ var StateMap = {
 					var id = "tile_"+Math.floor(Math.random()*10000);					
 									
 					tiles_bg_save.push({id: id, point: sprite.point.slice(0), parent: sprite.id });
+				}else{
+					alert("выберите спрайт");
+					return 
 				}	
 					for(var i=0; i<tiles_bg_save.length; i++){
 						var text_tile = tiles_bg_save[i];
@@ -661,7 +665,10 @@ var StateMap = {
 					var id = "tile_"+Math.floor(Math.random()*10000);					
 					
 					tiles_common_save.push({id: id, point: sprite.point.slice(0), parent: sprite.id });
-				}	
+				}else{
+					alert("выберите спрайт");
+					return 
+				}					
 					for(var i=0; i<tiles_common_save.length; i++){
 						var text_tile = tiles_common_save[i];
 						text = text + "," + JSON.stringify(text_tile);
@@ -673,7 +680,31 @@ var StateMap = {
 				
                 this.$methods().renderAll(false, {drawAreaPoints: false});				
 			},
-			create_scene: function(){
+			add_collision: function(){
+				var area = this.$props("commonProps").area_1;
+				if(this.$props("operationWith") != "common" || area.length < 4 || area.length > 4){
+					alert("область определения столкновения - должна состоять из 4 точек! ");
+					return
+				}
+				if(area[0][0] > area[2][0] || area[0][1] > area[2][1]    ){
+					alert("0 - точка должна быть в левом верхнем углу прямоугольника, точка 2 - правом нижнем ");
+					return;
+				}
+				var id = "collision_"+Math.floor(Math.random()*10000);
+				var text = '[ "tile_collision"';
+				tiles_collision_save.push({id: id, point: area[0].slice(0), width: area[2][0] - area[0][0], height: area[2][1] - area[0][1]});
+				for(var i=0; i<tiles_collision_save.length; i++){
+					var text_tile = tiles_collision_save[i];
+					text = text + "," + JSON.stringify(text_tile);
+			    }
+				text = text +"]";
+				this.parent.props.code_form.setProp(text);
+				updateCollisionTiles();
+				
+				this.$methods().renderAll(false, {drawAreaPoints: true});
+				
+			},
+			create_scene: function(){///кнопка обновления
 				var text = this.parent.props.code_form.getProp(text);
 				try{
 				   text = JSON.parse(text);
@@ -692,7 +723,12 @@ var StateMap = {
 						tiles_bg_save = text;
 						tiles_bg_save.shift();
 						updateBgTiles(this.$props().sprites);						
-					}				
+					}
+                    if(text[0] == "tile_collision"){
+						tiles_collision_save = text;
+						tiles_collision_save.shift();
+						updateCollisionTiles();						
+					}					
 				this.$methods().renderAll(false, {drawAreaPoints: false});				
 			  }
 			}         			
@@ -723,6 +759,8 @@ var StateMap = {
 					    context.rootLink.state.sprites.props.code.setProp(project.code);
                         tiles_common_save = JSON.parse(project.tiles_common_save);				
 				        tiles_bg_save = JSON.parse(project.tiles_bg_save);
+						if(project.tiles_collision_save){tiles_collision_save = JSON.parse(project.tiles_collision_save);
+						}else{tiles_collision_save = [];} 
 						
 						mainImgScale_x = 1;
 						mainImgScale_y = 1; 
@@ -734,14 +772,18 @@ var StateMap = {
 							   var sprite = createFromPC(key, context, false, project.sprites[key]);
 							   if(sprite)context.$$("emiter-create-sprite").set(key);									
 						}
-				tiles_bg = [];		
+				/*tiles_bg = [];		
 				for(var i=0; i<tiles_bg_save.length; i++){					
 					if(context.$props().sprites[tiles_bg_save[i].parent])tiles_bg.push(new Tile(tiles_bg_save[i].id, context.$props().sprites[tiles_bg_save[i].parent], tiles_bg_save[i].point));					
 				}
 				tiles_common = [];
 				for(var i=0; i<tiles_common_save.length; i++){	
 						if(context.$props().sprites[tiles_common_save[i].parent])tiles_common.push(new Tile(tiles_common_save[i].id, context.$props().sprites[tiles_common_save[i].parent], tiles_common_save[i].point));					
-				}
+				}*/
+				updateCommonTiles(context.$props().sprites);
+				updateBgTiles(context.$props().sprites);
+				updateCollisionTiles();
+				
 				//console.log(tiles_bg, tiles_common);
 						if(context.$("sprite_bones_panel") != undefined && project["sprites_group"] != undefined){
 								
@@ -751,8 +793,7 @@ var StateMap = {
 																var spr = new BoneSprite;
 																spr.points = sprites_group.points;
 																spr.id = key;
-																
-																
+																															
 																if(sprites_group.frame_collection){					
 					                                              spr.frame_collection = sprites_group.frame_collection.map(function(arr) { return arr.slice(0) });
 	                                                              spr.frame_index = sprites_group.frame_index;
@@ -765,16 +806,13 @@ var StateMap = {
 																		  order.push(i);
 																	  }
 																	  spr.order = order;
-																  }
-															      
+																  }															      
 				                                                }
 																context.$("sprite_bones_panel").props.start_module.prop = spr;
-																context.$("sprite_bones_panel").props.add_sprite_group.emitEvent("click");	
-											
+																context.$("sprite_bones_panel").props.add_sprite_group.emitEvent("click");												
 										}					
 								}				
-						}
-						
+						}						
 						}; })(json);						
 						reader.readAsText(file);					
 				}				
@@ -787,6 +825,7 @@ var StateMap = {
 				project.backImg= canvas.toDataURL("image/png").replace(/^data:image\/(png|jpg);base64,/, "");
 				project.sprites = {};
 				project.code  = this.rootLink.state.sprites.props.code.getProp();				               
+				/*
 				var text = '[';
 					for(var i=0; i<tiles_bg_save.length; i++){
 						var text_tile = tiles_bg_save[i];
@@ -794,13 +833,22 @@ var StateMap = {
 					}
 					text = text +"]";
 				project.tiles_bg_save = text;
+				*/
+				project.tiles_bg_save = JSON.stringify(tiles_bg_save);
+				/*
 				    text = '[';
 					for(var i=0; i<tiles_common_save.length; i++){
 						var text_tile = tiles_common_save[i];
 						text = text + (i == 0 ? " " : ",") + JSON.stringify(text_tile);
 					}
 					text = text +"]";
-				project.tiles_common_save = text;				
+				project.tiles_common_save = text;
+				*/
+				project.tiles_common_save = JSON.stringify(tiles_common_save);
+           
+				project.tiles_collision_save  =	JSON.stringify(tiles_collision_save);
+
+				JSON.stringify(tiles_collision);				
 				var sprites = this.$props().sprites;
 				for(var key in sprites){
 					project.sprites[key] = sprites[key].getToSave();					
@@ -928,6 +976,13 @@ var StateMap = {
 				//console.log(sprites);
 			}
 			if( this.stateProperties.operationWith == "common" && option.drawAreaPoints != false)drawAreaPoints(this.stateProperties.commonProps.area_1, this.stateProperties.commonProps.isEndArea_1);
+			///рисует непрходимые участки карты
+			for(var i=0; i< tiles_collision.length; i++){              				
+				drawArea(tiles_collision[i], true, 3, "red");
+				drawBox(tiles_collision[i].point.slice(0), [tiles_collision[i].point[0] + tiles_collision[i].width, tiles_collision[i].point[1] + tiles_collision[i].height  ],
+				"red", 3, false, false, true );
+			}
+			
 			this.stateMethods.drawGrid();
 			 ctx.restore();////////////////////////////
 		},
