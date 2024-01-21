@@ -36,9 +36,11 @@
 	 var mode  = "edit"; //редактирование "animation" -анимация
 	 var tiles_common = []; ///массив спрайтов для анимации
 	 var tiles_bg = [];   //массив спрайтов фона
+	 var tiles_collision = [];///непроходимые участки карты
 	 
 	 var tiles_common_save = []; 
-	 var tiles_bg_save = []; 
+	 var tiles_bg_save = [];
+     var tiles_collision_save = [];///непроходимая область на карте	 
 
 	///события клавиатуры и клика мыши
 	modules.mousedown =  function (point){}

@@ -11,7 +11,7 @@ function Tile(id, sprite, point){
 	this.frame_collection = sprite.frame_collection;///варианты изображения спрайта
 	this.frame_index = sprite.frame_index;
 	this.point = point.slice(0); //верхяя левая точка спрайта на канвас
-	this.point2 = sprite.point2.slice(0);
+	this.point2 = sprite.point2.slice(0); //нижняя правая
 
 
 	this.rotate = sprite.rotate; //вращение относительно начального при создании спрайта
@@ -64,8 +64,8 @@ function animationLopLayer(spritesArrBg, spritesArr, speed, sprites){
      if (time > speed ){
 	  	  //очистка канвас 
   	  ctx.translate(0, 0);
-	  ctx.clearRect(0, 0, srcWidth , srcHeight);
-	  
+	  //ctx.clearRect(0, 0, srcWidth , srcHeight);
+	  ctx.fillRect(0, 0, srcWidth , srcHeight);
 	        spritesArr.sort(compare);
 	        ctx.save();///////////////
             ctx.translate(ctxTranslate[0], ctxTranslate[1]);	
@@ -163,3 +163,51 @@ function updateBgTiles(sprites){
 		if(sprites[tiles_bg_save[i].parent])tiles_bg.push(new Tile(tiles_bg_save[i].id, sprites[tiles_bg_save[i].parent], tiles_bg_save[i].point));
 	}
 }
+
+function updateCollisionTiles(){ 
+	tiles_collision = [];
+	for(var i=0; i<tiles_collision_save.length; i++){
+		tiles_collision.push(tiles_collision_save[i]);
+	}
+}
+
+///определение столкновений
+function collisionDetection(obgectsArr, tile){
+	var collision = false;
+	for(var i=0; i< obgectsArr.length; i++){
+		
+		var ds = getDistance(obgectsArr[i].point, tile.point);
+		if(Math.abs(ds[0]) < obgectsArr[i].width + tile.width && Math.abs(ds[1]) < obgectsArr[i].height + tile.height){
+				var p1 = tile.point.slice(0); 
+				
+				
+				///для коррректной работы метода, площадь непроходимого участка
+				// должна быть по высоте и ширине больше части площади персонажа для определения столкновения 
+				
+				///определяем размер области ног персонажа для определения столкновений
+				p1[1] = p1[1]+ tile.height*0.8;
+				var t_h = tile.height*0.2;	
+				p1[0] = p1[0]+ tile.width*0.3;
+				var t_w = tile.width*0.4;
+				
+				var p2 = obgectsArr[i].point.slice(0);
+				 
+				var o_w = obgectsArr[i].width; var o_h = obgectsArr[i].height;
+				///console.log("столкновение возможно");
+				if(p1[0] > p2[0] && p1[0] < p2[0] + o_w && p1[1] > p2[1] && p1[1] < p2[1] + o_h){								
+						collision = [p1[0], p1[1]];		
+				}else if(p1[0] > p2[0] && p1[0] < p2[0] + o_w && p1[1]+t_h > p2[1] && p1[1]+t_h < p2[1] + o_h){ 
+						collision = [p1[0], p1[1]+t_h];		
+				}else if(p1[0]+t_w > p2[0] && p1[0]+t_w < p2[0] + o_w && p1[1]+t_h > p2[1] && p1[1]+t_h < p2[1] + o_h){ 
+						collision = [p1[0]+t_w, p1[1]+t_h];		
+				}else if(p1[0]+t_w > p2[0] && p1[0]+t_w < p2[0] + o_w && p1[1] > p2[1] && p1[1] < p2[1] + o_h){ 
+						collision = [p1[0]+t_w, p1[1]];		
+				}		
+		}
+		
+	}
+	return collision;
+}
+
+
+///ctx.isPointInPath(cutPathArea, tmpX, tmpY)

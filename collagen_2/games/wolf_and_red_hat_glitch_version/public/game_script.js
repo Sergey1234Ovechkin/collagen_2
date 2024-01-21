@@ -123,12 +123,12 @@ var mapPoint; ///точка на карте
 		  // console.log("stop");
 		  stop = true;
 	   }
-	   ///определение выхода персонажа за пределы карты
+	  /* ///определение выхода персонажа за пределы карты
 	   if(modules.personage.point[0] <= 0)modules.personage.point[0] = 2;
 	   if(modules.personage.point[1] <= 0)modules.personage.point[1] = 2;
 	   if(modules.personage.point[0] >= srcWidth + (maxTranslate[0]*-1))modules.personage.point[0] = srcWidth + (maxTranslate[0]*-1);
 	   if(modules.personage.point[1] >= srcHeight + (maxTranslate[1]*-1))modules.personage.point[1] = srcHeight + (maxTranslate[1]*-1);
-	   
+	   */
 	  ///
      if(direction_ == "right")nextStep(11, 8);
      if(direction_ == "left")nextStep(7, 4);
@@ -185,7 +185,14 @@ function move(/*arg1,*/arg2,arg3, arg4, arg5) {
 		}else{
             modules.personage.nextFrame(arg3);///устанавливаем первый кадр
 		}
-		modules.personage.move(arg4, arg5);//перемещаем объект	
+		modules.personage.move(arg4, arg5);//перемещаем объект
+		
+		///определение столкновений
+		var collision = collisionDetection(tiles_collision, modules.personage);
+		///console.log(collision);
+        if(collision){
+			modules.personage.move(-arg4, -arg5);		
+		}		
 }
 
 
@@ -238,6 +245,8 @@ fetch(gameUrl)
 							   var sprite = createFromPC(key, context, false, json.sprites[key]);
 							   if(sprite)context.$$("emiter-create-sprite").set(key);									
 						}
+						
+				//console.log(tiles_common_save);	
 				tiles_bg = [];
                 ///создание объектов фоновой подложки				
 				for(var i=0; i<tiles_bg_save.length; i++){					
@@ -250,8 +259,13 @@ fetch(gameUrl)
 					    addTileCommon(tiles_common_save[i].id, context.$props().sprites[tiles_common_save[i].parent], tiles_common_save[i].point);
 					}
 				}
+				if(json.tiles_collision_save)tiles_collision = JSON.parse(json.tiles_collision_save);
+			    //console.log(tiles_collision);
+				///staticTales = tiles_common.slice(0);
 			    ///анимация сцены
 				animation();
+				//цвет залифки окружающего фона
+				ctx.fillStyle = "black";
 	  })
   .catch((err) => console.error(`Fetch problem: ${err.message}`));
 		
