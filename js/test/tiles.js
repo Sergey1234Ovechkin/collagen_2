@@ -209,28 +209,36 @@ function updateCollisionTiles(){
 
 
 ///определение столкновений
-function collisionDetection(obgectsArr, tile){
+//obgectsArr, tile, dx, dy массив непрходимых участков, объект персонажа
+///dx, dy - процент от в долях от ширины и высоты спрайта 
+//для определения области столкновения относительно спрайта
+// для определения столкновений по всей высоте и ширине спрайта указать dx =1; dy =1;
+                                              ///0.4 0.2 - область ног персонажа
+function collisionDetection(obgectsArr, tile, dx, dy){
 	var collision = false;
 	for(var i=0; i< obgectsArr.length; i++){
 		
 		var ds = getDistance(obgectsArr[i].point, tile.point);
+		///если расстояние до непроходимой области меньше ширины и высоты спрайта + ширины и высоты обасти
+		///возможно столкновение
 		if(Math.abs(ds[0]) < obgectsArr[i].width + tile.width && Math.abs(ds[1]) < obgectsArr[i].height + tile.height){
-				var p1 = tile.point.slice(0); 
-				
+				///console.log("столкновение возможно");
 				
 				///для коррректной работы метода, площадь непроходимого участка
 				// должна быть по высоте и ширине больше части площади персонажа для определения столкновения 
 				
 				///определяем размер области ног персонажа для определения столкновений
-				p1[1] = p1[1]+ tile.height*0.8;
-				var t_h = tile.height*0.2;	
-				p1[0] = p1[0]+ tile.width*0.3;
-				var t_w = tile.width*0.4;
-				
+				var p1 = tile.point.slice(0);
+				p1[1] = p1[1]+ tile.height*(1-dy);
+				var t_h = tile.height*dy;	
+				p1[0] = p1[0]+ tile.width*(1 - dx)/2;
+				var t_w = tile.width*dx;
+
 				var p2 = obgectsArr[i].point.slice(0);
-				 
 				var o_w = obgectsArr[i].width; var o_h = obgectsArr[i].height;
-				///console.log("столкновение возможно");
+				
+				
+				///Определям попадение одной из точек области персонажа в непроходимую область
 				if(p1[0] > p2[0] && p1[0] < p2[0] + o_w && p1[1] > p2[1] && p1[1] < p2[1] + o_h){								
 						collision = [p1[0], p1[1]];		
 				}else if(p1[0] > p2[0] && p1[0] < p2[0] + o_w && p1[1]+t_h > p2[1] && p1[1]+t_h < p2[1] + o_h){ 
