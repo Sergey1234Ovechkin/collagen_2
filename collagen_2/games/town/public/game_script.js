@@ -1,3 +1,7 @@
+///массив персонажей 
+var personages = ["personage_1", "personage_2"];
+
+
 
 //адрес json файла спрайтов
 var gameUrl = window.location.origin + "/public/sprites.json";
@@ -14,8 +18,8 @@ var numUsers = 1;
 
 ///тип спрайта персонажа (название)
 var pesonageType = null;
-var typeP1 = "men_wolf";
-var typeP2 = "women_1";
+
+
 
 
 ///интервал анимации движения персонажа
@@ -363,7 +367,8 @@ function createSocket(){
 	 }	
 }
 ///функция создает и добавляет объект сцены, добавляет новое свойство с текстом сообщения
-function addTileCommon(id, sprite, point){	
+function addTileCommon(id, sprite, point){
+//console.log(sprite);	
 	var tile = new Tile(id, sprite, point);
 	tile.message = false;	
 	tiles_common.push(tile);
@@ -446,13 +451,16 @@ CollageSprite.prototype.render_ = function(){
 			}
 		}				
  }
- ///форма выбора типа персонажа
+ 
+ 
+ 
+  ///форма выбора типа персонажа
  StateMap.chose_personage = { 	
 		container: "chose_personage",
-		props: [["personage_1", "mousedown", "[name='personage_1']"], ["personage_2", "mousedown", "[name='personage_2']"],				 
+		props: [/*["personage_1", "mousedown", "[name='personage_1']"], ["personage_2", "mousedown", "[name='personage_2']"],*/				 
 		         ],
 		methods: {
-			personage_1: function(){
+			/*personage_1: function(){
 				this.parent.htmlLink.style.display = "none";///скрываем панель выбора персонажа
 				modules.personage =  addTileCommon(personageId, this.$props().sprites[typeP1], [250, 300]);
 				pesonageType = typeP1;
@@ -463,7 +471,22 @@ CollageSprite.prototype.render_ = function(){
 				modules.personage =  addTileCommon(personageId, this.$props().sprites[typeP2], [250, 300]);
 				pesonageType = typeP2;
                 createSocket();				
-            }			
+            }	*/		
 		}			
 		
  }
+ 
+ for(var i = 0; i < personages.length; i++){
+	 
+	  StateMap.chose_personage.props.push([personages[i], "mousedown", "[name="+personages[i]+"]"])
+	  StateMap.chose_personage.methods[personages[i]] = function(){
+				this.parent.htmlLink.style.display = "none";
+				console.log(this.htmlLink.dataset)
+				var personage_name = this.htmlLink.dataset["name"];
+				pesonageType = personage_name;
+				modules.personage =  addTileCommon(personageId, this.$props().sprites[personage_name], [250, 300]);				
+                createSocket();
+                console.log(this.$props().sprites, personage_name);				
+            }	 
+ }
+
