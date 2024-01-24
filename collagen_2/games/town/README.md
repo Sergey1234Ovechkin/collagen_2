@@ -21,29 +21,29 @@
 - открыть файл index.html, отредактировать разметку
 
 
-	<div data-chose_personage="container" class="form-group " style="display: none; padding: 10px; background-color: white; position: fixed;  top: 5px; left: 5px; z-index:5">
-		<p>Выберите персонажа:</p>
-		<div class="form-check">
-			<input data-name="men_wolf" name="personage_1" class="form-check-input" type="radio"  id="flexRadioDefault1">
-			<label class="form-check-label" for="flexRadioDefault1">
-				men_wolf
-			</label>
-		</div>
-		<div class="form-check">
-			<input data-name="women_1" name="personage_2"  class="form-check-input" type="radio"  id="flexRadioDefault2">
-			<label class="form-check-label" for="flexRadioDefault2">
-				women_1
-			</label>
-		</div>	
+		<div data-chose_personage="container" class="form-group " style="display: none; padding: 10px; background-color: white; position: fixed;  top: 5px; left: 5px; z-index:5">
+			<p>Выберите персонажа:</p>
+			<div class="form-check">
+				<input data-name="men_wolf" name="personage_1" class="form-check-input" type="radio"  id="flexRadioDefault1">
+				<label class="form-check-label" for="flexRadioDefault1">
+					men_wolf
+				</label>
+			</div>
+			<div class="form-check">
+				<input data-name="women_1" name="personage_2"  class="form-check-input" type="radio"  id="flexRadioDefault2">
+				<label class="form-check-label" for="flexRadioDefault2">
+					women_1
+				</label>
+			</div>	
 								 
-		<!--- добавляем в разметку нового персонажа data-name="new_personage" name="personage_3" --> 
-		<div class="form-check">
-			<input  data-name="new_personage" name="personage_3" class="form-check-input" type="radio" name="personage_3" id="flexRadioDefault2">
-			<label class="form-check-label" for="flexRadioDefault2">
-			new personage
-			</label>
-		</div>	
-	</div>
+			<!--- добавляем в разметку нового персонажа data-name="new_personage" name="personage_3" --> 
+			<div class="form-check">
+				<input  data-name="new_personage" name="personage_3" class="form-check-input" type="radio" name="personage_3" id="flexRadioDefault2">
+				<label class="form-check-label" for="flexRadioDefault2">
+				new personage
+				</label>
+			</div>	
+		</div>
 
 
 
