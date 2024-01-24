@@ -26,7 +26,10 @@
 	///форма выбора типа персонажа
 	StateMap.chose_personage = { 	
 		container: "chose_personage",
-		props: [["personage_1", "mousedown", "[name='personage_1']"], ["personage_2", "mousedown", "[name='personage_2']"],				 
+		props: [["personage_1", "mousedown", "[name='personage_1']"], 
+                       ["personage_2", "mousedown", "[name='personage_2']"],
+		       ///добавляем код нового персонажа 
+	                ["personage_3", "mousedown", "[name='personage_3']"],	
 		         ],
 		methods: {
 			personage_1: function(){
