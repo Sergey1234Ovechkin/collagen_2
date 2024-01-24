@@ -420,6 +420,9 @@ sprites - глобальный объект спрайтов, можно пер�
 
 # Пошаговое руководство по созданию мини‐чата игрового формата
 
-<img src="https://github.com/Sergey1234Ovechkin/collagen_2/blob/main/img_study/town.png">
+
 
 https://github.com/Sergey1234Ovechkin/collagen_2/wiki/Пошаговое-руководство-по-созданию-мини‐чата--игрового-формата
+
+
+<img src="https://github.com/Sergey1234Ovechkin/collagen_2/blob/main/img_study/town.png">
