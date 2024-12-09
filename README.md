@@ -1,5 +1,4 @@
 
-<img src="https://github.com/Sergey1234Ovechkin/god_zilla/blob/master/img/123.png">
 <img src="https://github.com/Sergey1234Ovechkin/god_zilla/blob/main/img/123.png">
 
 God_zilla - редактор для создания коллажей и спрайтов.
