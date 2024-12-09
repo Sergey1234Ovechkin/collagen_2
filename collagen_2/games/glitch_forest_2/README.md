@@ -1,2 +1,4 @@
 
-Ссылка на глитч демо:  https://cloudy-axiomatic-marscapone.glitch.me/
+Для работы игры требуются модули forever(глобальная инсталяция) и socket.js 
+Основной скрипт игры - game_script.js
+Запуск игры -  forever start server.js
