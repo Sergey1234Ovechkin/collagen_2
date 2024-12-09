@@ -1,5 +1,5 @@
 
-<img src="https://github.com/SergeyOvechkin/god_zilla/blob/master/img/123.png">
+<img src="https://github.com/Sergey1234Ovechkin/god_zilla/blob/master/img/123.png">
 
 God_zilla - редактор для создания коллажей и спрайтов.
 
@@ -351,7 +351,6 @@ key  - код кнопки
       sprites_group.sceletljjj.animation(sprites, 60);
 
 
-https://github.com/Sergey1234Ovechkin/collagen_2/blob/main/img_study/scelet.webm
 
 
 **В цикле можно одновременно рисовать обычные спрайты и группу спрайтов:** 	  
@@ -422,7 +421,7 @@ sprites - глобальный объект спрайтов, можно пер�
 
 
 
-https://github.com/Sergey1234Ovechkin/collagen_2/wiki/Пошаговое-руководство-по-созданию-мини‐чата--игрового-формата
+https://github.com/Sergey1234Ovechkin/god_zilla/wiki/Пошаговое-руководство-по-созданию-мини‐чата--игрового-формата
 
 
-<img src="https://github.com/Sergey1234Ovechkin/collagen_2/blob/main/img_study/town.png">
+<img src="https://github.com/Sergey1234Ovechkin/god_zilla/blob/main/img_study/town.png">
