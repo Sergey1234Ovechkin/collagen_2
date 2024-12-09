@@ -1,9 +1,9 @@
 
-<img src="https://github.com/godzilla-programs/collagen_2/blob/main/img/123.png">
+<img src="https://github.com/godzilla-programms/collagen_2/blob/main/img/123.png">
 
 Сollagen_2 - редактор для создания коллажей и спрайтов.
 
-Ссылка на редактор - онлайн: https://godzilla-programs.github.io/collagen_2/index.html
+Ссылка на редактор - онлайн: https://godzilla-programms.github.io/collagen_2/index.html
 
 Редактор работает онлайн с github, достаточно просто перейти по ссылке выше, также его можно скачать себе и запустить на локальном сервере, например на node.js
 
