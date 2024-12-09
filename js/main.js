@@ -7,7 +7,7 @@
 	 var colorCommonArea = "red"; //..фоновой картинки
 	 var colorAdditionalArea = "violet"; //..фоновой картинки
 	 var img = new Image();
-	 img.src="./img/dolphin.png";
+	 img.src="./img/img.png";
 	 var saveImg = false; //предыдущее преобразование картинки фона
 	 var restoreImg = false; //сохраненная картинка
 	 var stepBack = []; //шаг назад для приобразований фоновой картинки
