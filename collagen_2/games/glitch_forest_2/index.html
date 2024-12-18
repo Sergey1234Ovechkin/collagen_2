@@ -27,7 +27,11 @@
 							<canvas data-canvas="container"  id="canvas" style=""></canvas>
 							<!--форма отправки сообщений -->
 							<div data-user_message="container" class="form-group " style="position: fixed;  top: 2px; right: 2px; z-index:5">
-								<input name="user_msg" type="text"  style="width: 270px; padding: 0px; font-size: 14px; margin-top: 2px;"  placeholder="" title="сообщение">
+							
+								<input type="checkbox" name="move_type"  class="form-check-input" style="margin-top: 9px;" >
+								<label class="form-check-label" for="exampleCheck1" style="color: red; font-weight: bold;">движение мышью</label>
+							
+								<input value="...game loading" name="user_msg" type="text"  style="width: 270px; padding: 0px; font-size: 14px; margin-top: 2px;"  placeholder="" title="сообщение">
 								<button type="button"  name="user_msg_btn" class="btn btn-info btn-sm"  title="сообщение">message</button>	
 							</div>
 							<div data-chose_personage="container" class="form-group " style="display: none; padding: 10px; background-color: white; position: fixed;  top: 5px; left: 5px; z-index:5">
@@ -43,7 +47,19 @@
 									<label class="form-check-label" for="flexRadioDefault2">
 										personage_2
 									</label>
-									</div>	
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="personage_3" id="flexRadioDefault3">
+									<label class="form-check-label" for="flexRadioDefault3">
+										personage_3(cat)
+									</label>
+								</div>	
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="personage_4" id="flexRadioDefault4">
+									<label class="form-check-label" for="flexRadioDefault4">
+										monkey
+									</label>
+								</div>
 							</div>
 							
                            						
@@ -71,11 +87,14 @@
 	   
 	   <script src="./public/socket.js"></script>
 
-	   <!--основной скрипт игры --->
-	   <script src="./public/game_script.js"></script>
+
 	   
 	   <!--скирип загрузки приложения  -->
 	   <script src="./public/main_games.js"></script>
+	   
+	   
+	   <!--основной скрипт игры --->
+	   <script src="./public/game_script.js"></script>
     
     
     
