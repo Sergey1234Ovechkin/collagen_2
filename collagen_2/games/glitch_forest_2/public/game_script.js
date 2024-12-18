@@ -16,6 +16,8 @@ var numUsers = 1;
 var pesonageType = null;
 var typeP1 = "personage_1";
 var typeP2 = "personage_2";
+var typeP3 = "cat_sprite";
+var typeP4 = "monkey";
 
 
 ///интервал анимации движения персонажа
@@ -460,7 +462,8 @@ CollageSprite.prototype.render_ = function(){
  ///форма выбора типа персонажа
  StateMap.chose_personage = { 	
 		container: "chose_personage",
-		props: [["personage_1", "mousedown", "[name='personage_1']"], ["personage_2", "mousedown", "[name='personage_2']"],				 
+		props: [["personage_1", "mousedown", "[name='personage_1']"], ["personage_2", "mousedown", "[name='personage_2']"],
+		["personage_3", "mousedown", "[name='personage_3']"],["personage_4", "mousedown", "[name='personage_4']"],		 
 		         ],
 		methods: {
 			personage_1: function(){
@@ -473,6 +476,18 @@ CollageSprite.prototype.render_ = function(){
 				this.parent.htmlLink.style.display = "none";
 				modules.personage =  addTileCommon(personageId, this.$props().sprites[typeP2], [250, 300]);
 				pesonageType = typeP2;
+                createSocket();				
+            },
+			personage_3: function(){
+				this.parent.htmlLink.style.display = "none";
+				modules.personage =  addTileCommon(personageId, this.$props().sprites[typeP3], [250, 300]);
+				pesonageType = typeP3;
+                createSocket();				
+            },	
+			personage_4: function(){
+				this.parent.htmlLink.style.display = "none";
+				modules.personage =  addTileCommon(personageId, this.$props().sprites[typeP4], [250, 300]);
+				pesonageType = typeP4;
                 createSocket();				
             }			
 		}			
