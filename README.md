@@ -1,5 +1,5 @@
 
-<img src="https://github.com/godzilla-programms/collagen_2/blob/main/img/123.png">
+<img src="https://github.com/godzilla-programms/collagen_2/blob/main/collagen_2.png">
 
 Сollagen_2 - редактор для создания коллажей и спрайтов.
 
